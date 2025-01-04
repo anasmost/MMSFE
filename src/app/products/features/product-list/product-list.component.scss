@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: auto;
+}
+
+img {
+  display: block;
+}
+
+.pi-cart-arrow-down:hover {
+  filter: brightness(0.9);
+}
+
+p-rating {
+  --primary-color: #ffd700;
+}
+
+p-card {
+  .instock,
+  &:has(.instock) [pbadge] {
+    --primary-color: #30c80e;
+  }
+
+  .lowstock,
+  &:has(.lowstock) [pbadge] {
+    --primary-color: #ff9100;
+  }
+
+  .outofstock,
+  &:has(.outofstock) [pbadge] {
+    --primary-color: #ff2f00;
+  }
+}
