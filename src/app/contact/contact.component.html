@@ -1,0 +1,62 @@
+<form class="flex flex-column gap-2 p-4" #actorForm="ngForm">
+  <p>
+    <p-inputGroup class="max-w-20rem">
+      <p-inputGroupAddon>
+        <i class="pi pi-at"></i>
+      </p-inputGroupAddon>
+      <input
+        [(ngModel)]="email"
+        name="email"
+        #emailRef="ngModel"
+        id="email"
+        pInputText
+        placeholder="Email"
+        email
+        required
+      />
+    </p-inputGroup>
+    <small [hidden]="emailRef.valid || emailRef.untouched" class="p-error">
+      {{
+        (emailRef.hasError("required") && "Email is required") ||
+          (emailRef.hasError("email") && "Email not valid")
+      }}
+    </small>
+  </p>
+
+  <p>
+    <p-floatLabel>
+      <textarea
+        [(ngModel)]="message"
+        name="message"
+        #messageRef="ngModel"
+        id="message"
+        rows="8"
+        cols="60"
+        pInputTextarea
+        required
+        maxlength="300"
+      >
+      </textarea>
+      <label for="message">Message</label>
+    </p-floatLabel>
+    <small [hidden]="messageRef.valid || messageRef.untouched" class="p-error">
+      Message is required
+    </small>
+  </p>
+
+  <p class="flex gap-4 align-items-center">
+    <p-button
+      type="submit"
+      label="Envoyer"
+      icon="pi pi-check"
+      [disabled]="!actorForm.form.valid"
+    />
+    <p-message
+      severity="success"
+      text="Demande de contact envoyée avec succès"
+      styleClass="text-sm"
+      #successMessage
+      [hidden]="!actorForm.submitted"
+    />
+  </p>
+</form>
