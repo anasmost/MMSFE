@@ -10,8 +10,6 @@ export class CartService {
   public readonly cart = this._cart.asReadonly();
 
   public add(product: Product): void {
-    console.log(this.cart());
-
     this._cart.update((cart) => {
       const productIndex = cart.findIndex((p) => p.id === product.id);
 
@@ -30,5 +28,14 @@ export class CartService {
 
   public remove(id: number): void {
     this._cart.update((cart) => cart.filter((p) => p.id !== id));
+  }
+
+  public decreaseQuantity(product: Product): void {
+    this._cart.update((cart) => {
+      const cartProduct = cart.find((p) => p.id === product.id)!;
+      if (cartProduct.quantity > 1) cartProduct.quantity--;
+
+      return cart.slice();
+    });
   }
 }

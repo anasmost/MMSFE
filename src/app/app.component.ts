@@ -15,6 +15,7 @@ import { PanelMenuComponent } from "./shared/ui/panel-menu/panel-menu.component"
 import { DataViewModule } from "primeng/dataview";
 import { CommonModule } from "@angular/common";
 import { ProductsService } from "./products/data-access/products.service";
+import { SumPipe } from "./shared/pipes/sum";
 
 @Component({
   selector: "app-root",
@@ -30,18 +31,18 @@ import { ProductsService } from "./products/data-access/products.service";
     OverlayPanelModule,
     DataViewModule,
     CommonModule,
+    SumPipe,
   ],
 })
 export class AppComponent {
   title = "ALTEN SHOP";
-  private readonly cartService = inject(CartService);
   private readonly productService = inject(ProductsService);
+  public readonly cartService = inject(CartService);
 
   public readonly cart = computed(() =>
-    this.cartService
-      .cart()
-      .map((item) =>
-        this.productService.products().find((p) => p.id === item.id)
-      )
+    this.cartService.cart().map((item) => ({
+      ...this.productService.products().find((p) => p.id === item.id),
+      quantity: item.quantity,
+    }))
   );
 }
